@@ -1,0 +1,121 @@
+"use client";
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { FiSearch, FiMapPin } from 'react-icons/fi';
+import gsap from 'gsap';
+
+const Hero = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const searchRef = useRef(null);
+  const citiesRef = useRef(null);
+  const statsRef = useRef(null);
+  const bgElements = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Set initial states for content
+      gsap.set([titleRef.current, descRef.current, searchRef.current], {
+        opacity: 0,
+        y: 20
+      });
+      
+      gsap.set(citiesRef.current?.children, {
+        opacity: 0,
+        y: 15,
+        scale: 0.95
+      });
+
+      // Create main timeline for content animations
+      const mainTimeline = gsap.timeline();
+      mainTimeline
+        .to(titleRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out"
+        })
+        .to(descRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out"
+        }, "-=0.7")
+        .to(searchRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out"
+        }, "-=0.6");
+
+      // Animate background elements
+      bgElements.current.forEach((element, index) => {
+        if (!element) return;
+        console.log('Animating element:', index); // Debug log
+
+        // Initial state
+        gsap.set(element, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: 0.8,
+          opacity: 0
+        });
+
+        // Fade in
+        gsap.to(element, {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          delay: index * 0.2,
+          ease: "power2.out"
+        });
+
+        // Continuous floating animation
+        gsap.to(element, {
+          x: gsap.utils.random(-40, 40),
+          y: gsap.utils.random(-40, 40),
+          rotation: index % 2 === 0 ? '+=360' : '-=360',
+          duration: gsap.utils.random(6, 10),
+          repeat: -1,
+          yoyo: true,
+          ease: "power1.inOut",
+          delay: index * 0.2
+        });
+
+        // Scale pulsing
+        gsap.to(element, {
+          scale: gsap.utils.random(0.9, 1.1),
+          duration: gsap.utils.random(2, 4),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.3
+        });
+      });
+
+      // Animate cities with stagger
+      gsap.to(citiesRef.current.children, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+        delay: 0.8
+      });
+
+      // Animate stats
+      gsap.from(statsRef.current.children, {
+        y: 20,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.5,
+        stagger: 0.1,
+        delay: 1.5
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);

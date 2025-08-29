@@ -1,0 +1,211 @@
+"use client";
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { FiSearch, FiMapPin } from 'react-icons/fi';
+import gsap from 'gsap';
+
+const Hero = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const searchRef = useRef(null);
+  const citiesRef = useRef(null);
+  const statsRef = useRef(null);
+  const bgElements = useRef([]);
+
+  useEffect(() => {
+    console.log('Starting animations'); // Debug log
+    
+    const ctx = gsap.context(() => {
+      // Set initial states
+      gsap.set([titleRef.current, descRef.current, searchRef.current], {
+        opacity: 0,
+        y: 20
+      });
+      
+      gsap.set(citiesRef.current?.children, {
+        opacity: 0,
+        y: 15,
+        scale: 0.95
+      });
+
+      // Main content animations
+      const timeline = gsap.timeline();
+      timeline
+        .to(titleRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out"
+        })
+        .to(descRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out"
+        }, "-=0.7")
+        .to(searchRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out"
+        }, "-=0.6");
+
+      // Animate cities
+      timeline.to(citiesRef.current.children, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+      }, "-=0.4");
+
+      // Stats animation
+      timeline.from(statsRef.current.children, {
+        y: 20,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.5,
+        stagger: 0.1
+      }, "+=0.2");
+
+      // Animate background elements
+      bgElements.current.forEach((element, index) => {
+        if (!element) return;
+        console.log('Animating background element:', index);
+
+        gsap.set(element, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: 0.8,
+          opacity: 0
+        });
+
+        // Fade in
+        gsap.to(element, {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          delay: index * 0.2,
+          ease: "power2.out"
+        });
+
+        // Continuous floating animation
+        gsap.to(element, {
+          x: gsap.utils.random(-40, 40),
+          y: gsap.utils.random(-40, 40),
+          rotation: index % 2 === 0 ? '+=360' : '-=360',
+          duration: gsap.utils.random(6, 10),
+          repeat: -1,
+          yoyo: true,
+          ease: "power1.inOut",
+          delay: index * 0.2
+        });
+
+        // Scale pulsing
+        gsap.to(element, {
+          scale: gsap.utils.random(0.9, 1.1),
+          duration: gsap.utils.random(2, 4),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.3
+        });
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div className="relative flex items-center justify-center overflow-hidden bg-[#f8fafc] pt-28 pb-12">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-blue-100/30 to-purple-100/30 rounded-full blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-t from-blue-100/30 to-purple-100/30 rounded-full blur-3xl -z-10 transform -translate-x-1/2 translate-y-1/2"></div>
+        
+        {/* Animated geometric shapes */}
+        <div ref={el => bgElements.current[0] = el} className="absolute top-20 left-[15%] w-24 h-24 bg-gradient-to-br from-pink-400/20 to-purple-500/20 rounded-xl -z-5"></div>
+        <div ref={el => bgElements.current[1] = el} className="absolute top-40 right-[20%] w-32 h-32 bg-gradient-to-tr from-blue-400/20 to-cyan-500/20 rounded-full -z-5"></div>
+        <div ref={el => bgElements.current[2] = el} className="absolute bottom-32 left-[25%] w-20 h-20 bg-gradient-to-br from-green-400/20 to-emerald-500/20 rounded-lg rotate-45 -z-5"></div>
+        <div ref={el => bgElements.current[3] = el} className="absolute top-[55%] right-[30%] w-28 h-28 bg-gradient-to-bl from-orange-400/20 to-amber-500/20 rounded-[3rem] -z-5"></div>
+        <div ref={el => bgElements.current[4] = el} className="absolute bottom-24 right-[35%] w-16 h-16 bg-gradient-to-tr from-purple-400/20 to-pink-500/20 rounded-lg rotate-12 -z-5"></div>
+        <div ref={el => bgElements.current[5] = el} className="absolute top-[35%] left-[40%] w-20 h-20 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-full -z-5"></div>
+        <div ref={el => bgElements.current[6] = el} className="absolute bottom-[40%] left-[20%] w-24 h-24 bg-gradient-to-tr from-teal-400/20 to-cyan-500/20 rounded-2xl rotate-180 -z-5"></div>
+      </div>
+
+      {/* Main content */}
+      <div className="relative container mx-auto px-16 flex flex-col items-center text-center max-w-5xl">
+        {/* Text content */}
+        <div className="space-y-6 mb-12">
+          <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold text-gray-900 tracking-tight">
+            Plan your perfect trip
+          </h1>
+          <p ref={descRef} className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            Organize your travel itinerary, discover amazing places, and collaborate with friends all in one place.
+          </p>
+          
+          {/* Search Bar */}
+          <div ref={searchRef} className="w-full max-w-2xl mx-auto mt-8">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FiSearch className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                placeholder="Where do you want to go?"
+                className="block w-full pl-12 pr-24 py-4 text-lg bg-white border border-gray-200 rounded-full shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-gray-900"
+              />
+              <div className="absolute inset-y-0 right-2 flex items-center">
+                <button className="px-3 py-3 md:px-6 md:py-2 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors">
+                  <FiSearch className="h-5 w-5 block md:hidden" />
+                  <span className="hidden md:block text-base whitespace-nowrap">Start Planning</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Popular Cities */}
+          <div className="relative w-full max-w-2xl mx-auto mt-8 py-4 z-10">
+            <div ref={citiesRef} className="flex flex-wrap items-center justify-center gap-3">
+              {[
+                { name: "Paris", id: 1 },
+                { name: "Tokyo", id: 2 },
+                { name: "New York", id: 3 },
+                { name: "London", id: 4 }
+              ].map((city) => (
+                <button
+                  key={city.id}
+                  className="flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm text-gray-600 hover:bg-gray-50 shadow-md hover:shadow-lg transition-all border border-gray-100"
+                >
+                  <FiMapPin className="h-4 w-4" />
+                  <span>{city.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div ref={statsRef} className="mt-16 grid grid-cols-3 gap-8 max-w-3xl mx-auto">
+            {[
+              { number: "10M+", label: "Happy Travelers" },
+              { number: "500+", label: "Destinations" },
+              { number: "99%", label: "Satisfaction" }
+            ].map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-gray-900">{stat.number}</div>
+                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Hero;
