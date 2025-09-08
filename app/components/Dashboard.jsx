@@ -68,18 +68,16 @@ const Dashboard = () => {
         </div>
 
         {/* Hotel Search Section */}
-        <div className="mb-12">
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Need a place to stay?</h2>
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Need a place to stay?</h2>
+          <div className="bg-gray-50 rounded-lg p-4">
             <div className="flex gap-4">
-              <div className="flex-grow">
-                <input
-                  type="text"
-                  placeholder="Enter a destination"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <button className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+              <input
+                type="text"
+                placeholder="Enter your destination"
+                className="flex-1 px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
                 Search
               </button>
             </div>
@@ -87,9 +85,9 @@ const Dashboard = () => {
         </div>
 
         {/* Map Section */}
-        <div className="mb-12">
-          <div className="bg-white rounded-lg shadow-sm p-4 h-[300px] flex items-center justify-center">
-            <p className="text-gray-500">Map View Coming Soon</p>
+        <div className="mb-8">
+          <div className="bg-gray-50 rounded-lg p-4 h-[300px] flex items-center justify-center">
+            <p className="text-gray-500">Map loading ...</p>
           </div>
         </div>
 
