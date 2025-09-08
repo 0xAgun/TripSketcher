@@ -38,11 +38,16 @@ const Navbar = () => {
     { name: "My Trips", href: "#" },
     { name: "Explore", href: "#" },
     { name: "Pro", href: "#" },
+    { name: "Dashboard", href: "/dashboard" },
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 px-8 py-5 ${
-      mobileMenuOpen ? "bg-white" : isScrolled ? "bg-white/80 backdrop-blur shadow-sm" : "bg-transparent"
+    <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 px-8 py-4 h-16 bg-white ${
+      mobileMenuOpen 
+        ? "shadow-sm" 
+        : isScrolled 
+          ? "shadow-sm backdrop-blur-md" 
+          : ""
     }`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
@@ -50,13 +55,11 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             <a href="/login">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z" fill="#2563EB" />
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" fill="#000000" />
               </svg>
             </a>
             <a href="/signup">
-              <span className={`font-semibold text-xl transition-colors duration-200 ${
-                mobileMenuOpen || isScrolled ? "text-[#1a1a1a]" : "text-[#4a5568]"
-              }`}>
+              <span className="font-semibold text-xl transition-colors duration-200 text-gray-900">
                 TripSketcher
               </span>
             </a>
@@ -69,9 +72,7 @@ const Navbar = () => {
             <li key={item.name}>
               <a
                 href={item.href}
-                className={`font-semibold text-[15px] no-underline transition-colors duration-200 ${
-                  isScrolled ? "text-[#1a1a1a]" : "text-[#4a5568]"
-                }`}
+                className="font-semibold text-[15px] no-underline transition-colors duration-200 text-gray-900 hover:text-gray-600"
               >
                 {item.name}
               </a>
@@ -83,13 +84,11 @@ const Navbar = () => {
         <div className="hidden md:flex gap-4 items-center">
           <a
             href="#"
-            className={`font-medium text-[15px] no-underline transition-colors duration-200 ${
-              isScrolled ? "text-[#1a1a1a]" : "text-[#4a5568]"
-            }`}
+            className="font-medium text-[15px] no-underline transition-colors duration-200 text-gray-900 hover:text-gray-600"
           >
             Sign In
           </a>
-          <button className="bg-black text-white px-6 py-2.5 rounded-lg font-semibold text-sm cursor-pointer transition-all duration-200 shadow-lg hover:-translate-y-0.5 hover:shadow-xl">
+          <button className="bg-black text-white hover:bg-gray-900 px-6 py-2.5 rounded-lg font-semibold text-sm cursor-pointer transition-all duration-200">
             Get Started
           </button>
         </div>

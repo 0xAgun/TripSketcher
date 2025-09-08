@@ -68,7 +68,7 @@ const Footer = () => {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white transition"
+                  className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-gray-200 hover:text-gray-600 transition"
                 >
                   {s.icon}
                 </a>
@@ -88,7 +88,7 @@ const Footer = () => {
                     <li key={l.name}>
                       <a
                         href={l.href}
-                        className="text-sm text-slate-400 hover:text-white transition"
+                        className="text-sm text-slate-400 hover:text-gray-600 transition"
                       >
                         {l.name}
                       </a>

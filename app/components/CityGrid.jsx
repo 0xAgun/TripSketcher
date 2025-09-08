@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import clsx from "clsx"; // Import clsx for conditional classNames
 
 const features = [
 	{
@@ -73,23 +74,18 @@ export default function CityGrid() {
 			<div className="px-4 md:px-8 max-w-7xl mx-auto">
 				<div className="bg-[#f8f9fa] px-8 py-8 rounded-2xl">
 					<div className="text-center mb-10">
-						{/* tiny label */}
-						<span className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full
-                   text-xs font-medium text-blue-700
-                   ring-1 ring-blue-600/20
-                   bg-gradient-to-r from-blue-600/10 to-cyan-500/10">
+						<span className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full text-xs font-medium text-blue-700 ring-1 ring-blue-600/20 bg-gradient-to-r from-blue-600/10 to-cyan-500/10">
 							✨ Your next escape awaits
 						</span>
 
-						{/* heading */}
 						<h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 tracking-tight leading-tight">
 							Explore hundreds of places to visit
-for every corner of the world
+							<br />
+							for every corner of the world
 						</h2>
 
 						<p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-							Everything you need to create unforgettable travel experiences, all in
-							one place.
+							Everything you need to create unforgettable travel experiences, all in one place.
 						</p>
 					</div>
 
@@ -97,12 +93,13 @@ for every corner of the world
 						{features.map((f, i) => (
 							<article
 								key={i}
-								className={`
-                  relative overflow-hidden rounded-2xl group
-                  col-span-1 md:col-span-1 lg:${f.wide ? "col-span-2" : "col-span-1"}
-                  h-52 md:h-56 lg:h-60
-                  shadow-[0_8px_32px_0_rgba(31,38,135,0.12)]
-                `}
+								className={clsx(
+									"relative overflow-hidden rounded-2xl group",
+									"col-span-1 md:col-span-1",
+									f.wide ? "lg:col-span-2" : "lg:col-span-1",
+									"h-52 md:h-56 lg:h-60",
+									"shadow-[0_8px_32px_0_rgba(31,38,135,0.12)]"
+								)}
 							>
 								{/* Full-card image */}
 								<img
@@ -111,24 +108,23 @@ for every corner of the world
 									className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
 								/>
 
-								{/* Gradient overlay for readability */}
+								{/* Gradient overlay */}
 								<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-								{/* Bottom-left labels/content */}
+								{/* Content */}
 								<div className="absolute bottom-0 left-0 p-5 md:p-6 text-white max-w-[90%]">
-									{/* Optional badges */}
-									{f.tags?.length ? (
+									{f.tags?.length > 0 && (
 										<div className="flex flex-wrap gap-2 mb-2">
-											{f.tags.map((t, idx) => (
+											{f.tags.map((tag, idx) => (
 												<span
 													key={idx}
 													className="px-2 py-0.5 text-xs rounded-md bg-white/15 backdrop-blur-sm border border-white/20"
 												>
-													{t}
+													{tag}
 												</span>
 											))}
 										</div>
-									) : null}
+									)}
 
 									<h3 className="text-lg md:text-xl font-semibold drop-shadow-sm">
 										{f.title}
